@@ -10,6 +10,14 @@ class AuthService
         return (int) (microtime(true) * 1000) > $expiryMs;
     }
 
-    // Latihan Fitur: verifyToken(string $token) (commit feat).
-    // Refactor: ekstrak parsing token ke helper (commit refactor).
+    public function verifyToken(string $token): bool
+    {
+        if (strlen($token) < 10) {
+            return false;
+        }
+        if (strpos($token, '.') === false) {
+            return false;
+        }
+        return true;
+    }
 }
