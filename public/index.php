@@ -47,6 +47,19 @@ $router->post('/users', function() use ($userController) {
     }
 });
 
+$router->post('/users/login', function() use ($authService) {
+    header('Content-Type: application/json');
+    $raw = file_get_contents('php://input');
+    $data = json_decode($raw, true) ?: [];
+    $token = $data['token'] ?? '';
+    if (!$authService->verifyToken($token)) {
+        http_response_code(401);
+        echo json_encode(['error' => 'Invalid token']);
+        return;
+    }
+    echo json_encode(['status' => 'authenticated']);
+});
+
 try {
     $router->dispatch($_SERVER['REQUEST_METHOD'], parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
 } catch (Throwable $e) {
