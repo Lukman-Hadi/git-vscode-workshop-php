@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Controllers;
 
 use App\Services\UserService;
+use InvalidArgumentException;
 
 class UserController
 {
@@ -14,11 +15,13 @@ class UserController
         $this->service = new UserService();
     }
 
-    public function listUsers(): array
+    public function listUsers(array $options = []): array
     {
-        // Refactor candidate: parameter opsional sort (commit refactor terpisah).
-        return $this->service->listUsers();
+        return $this->service->listUsers($options);
     }
 
-    // Latihan Fitur: method addUser(array $data) yang validasi email + nama (commit feat).
+    public function addUser(array $data): array
+    {
+        return $this->service->validateAndAddUser($data);
+    }
 }
