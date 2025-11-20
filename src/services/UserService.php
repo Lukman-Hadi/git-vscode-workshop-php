@@ -13,10 +13,13 @@ class UserService
         ['id' => '2', 'name' => 'Bimo', 'email' => 'bimo@example.com'],
     ];
 
-    public function listUsers(): array
+    public function listUsers(array $options = []): array
     {
-        // Refactor candidate: tambahkan opsi sortBy (commit refactor).
-        return $this->users;
+        $users = $this->users;
+        if (($options['sortBy'] ?? null) === 'name') {
+            usort($users, fn($a, $b) => strcmp($a['name'], $b['name']));
+        }
+        return $users;
     }
 
     public function getUserById(string $id): ?array
