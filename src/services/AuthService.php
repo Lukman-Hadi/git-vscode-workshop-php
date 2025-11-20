@@ -5,8 +5,11 @@ namespace App\Services;
 
 class AuthService
 {
-    public function isTokenExpired(int $expiryMs): bool
+    public function isTokenExpired(?int $expiryMs): bool
     {
+        if ($expiryMs === null) {
+            return true;
+        }
         return (int) (microtime(true) * 1000) > $expiryMs;
     }
 
