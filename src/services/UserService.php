@@ -4,10 +4,10 @@ declare(strict_types=1);
 namespace App\Services;
 
 use App\Utils\EmailValidator;
+use InvalidArgumentException;
 
 class UserService
 {
-    // Simulasi storage in-memory (latihan: nanti refactor ke Repository terpisah).
     private array $users = [
         ['id' => '1', 'name' => 'Ayla', 'email' => 'ayla@example.com'],
         ['id' => '2', 'name' => 'Bimo', 'email' => 'bimo@example.com'],
@@ -29,5 +29,24 @@ class UserService
         return null;
     }
 
-    // Latihan Fitur: tambah method validateAndAddUser(array $data) (commit feat terpisah).
+    public function validateAndAddUser(array $data): array
+    {
+        $name = trim($data['name'] ?? '');
+        $email = trim($data['email'] ?? '');
+
+        if ($name === '' || $email === '') {
+            throw new InvalidArgumentException('Name or email cannot be empty');
+        }
+        if (!EmailValidator::isValid($email)) {
+            throw new InvalidArgumentException('Invalid email format');
+        }
+
+        $new = [
+            'id' => uniqid('', true),
+            'name' => $name,
+            'email' => $email,
+        ];
+        $this->users[] = $new;
+        return $new;
+    }
 }
