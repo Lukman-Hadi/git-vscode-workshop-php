@@ -5,15 +5,19 @@ namespace App\Utils;
 
 class Logger
 {
-    public static function info(string $message): void
+    public static function info(string $message, array $context = []): void
     {
-        // Refactor candidate: ubah ke format JSON (commit refactor).
-        echo "[INFO] " . date('c') . " " . $message . PHP_EOL;
+        echo "[INFO] " . date('c') . " " . $message . (!empty($context) ? ' ' . json_encode($context) : '') . PHP_EOL;
     }
 
-    public static function error(string $message): void
+    public static function error(string $message, array $context = []): void
     {
-        // Latihan Refactor: standarisasi struktur (commit refactor).
-        fwrite(STDERR, "[ERROR] " . date('c') . " " . $message . PHP_EOL);
+        $payload = [
+            'level' => 'error',
+            'timestamp' => date('c'),
+            'message' => $message,
+            'context' => $context,
+        ];
+        fwrite(STDERR, json_encode($payload, JSON_UNESCAPED_SLASHES) . PHP_EOL);
     }
 }
