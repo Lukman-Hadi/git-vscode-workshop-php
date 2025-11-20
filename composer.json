@@ -1,0 +1,1 @@
+{"name":"workshop/git-vscode-php","description":"Repo latihan workshop Git VS Code (PHP).","type":"project","license":"MIT","require":{},"autoload":{"psr-4":{"App\\":"src/"}}}
