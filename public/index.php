@@ -5,32 +5,52 @@ require __DIR__ . '/../vendor/autoload.php';
 
 use App\Router;
 use App\Controllers\UserController;
+use App\Services\AuthService;
 use App\Utils\Logger;
 
-// INIT (Latihan: nanti refactor ke bootstrap terpisah)
 $router = new Router();
 $userController = new UserController();
+$authService = new AuthService();
 
-// HEALTH
 $router->get('/health', function() {
     header('Content-Type: application/json');
     echo json_encode(['status' => 'ok', 'timestamp' => time()]);
 });
 
-// USERS ENDPOINT
 $router->get('/users', function() use ($userController) {
     header('Content-Type: application/json');
-    echo json_encode($userController->listUsers());
+    $sort = $_GET['sortBy'] ?? null;
+    $options = $sort ? ['sortBy' => $sort] : [];
+    echo json_encode($userController->listUsers($options));
 });
 
-// TODO (Latihan Fitur): Tambah endpoint POST /users untuk menambah user baru (commit feat terpisah).
-
-// TODO (Latihan Refactor): Pindahkan inisialisasi Router & Controller ke file bootstrap (commit refactor).
+$router->post('/users', function() use ($userController) {
+    header('Content-Type: application/json');
+    $raw = file_get_contents('php://input');
+    $data = json_decode($raw, true);
+    if (!is_array($data)) {
+        http_response_code(400);
+        echo json_encode(['error' => 'Invalid JSON body']);
+        return;
+    }
+    try {
+        $new = $userController->addUser($data);
+        http_response_code(201);
+        echo json_encode($new);
+    } catch (InvalidArgumentException $e) {
+        http_response_code(422);
+        echo json_encode(['error' => $e->getMessage()]);
+    } catch (Throwable $e) {
+        Logger::error('Add user failed', ['exception' => $e->getMessage()]);
+        http_response_code(500);
+        echo json_encode(['error' => 'Internal Server Error']);
+    }
+});
 
 try {
     $router->dispatch($_SERVER['REQUEST_METHOD'], parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
 } catch (Throwable $e) {
-    Logger::error("Unhandled exception: " . $e->getMessage());
+    Logger::error('Unhandled exception: '.$e->getMessage());
     http_response_code(500);
     echo json_encode(['error' => 'Internal Server Error']);
 }
