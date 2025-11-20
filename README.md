@@ -48,4 +48,16 @@ fix(auth): perbaiki pengecekan token kedaluwarsa null
 - Periksa `git diff --staged` sebelum commit final.
 - Gunakan stash bila perubahan belum siap di-commit.
 
+## Struktur Log Error (JSON)
+`Logger::error` sekarang menghasilkan format JSON:
+```json
+{
+  "level": "error",
+  "timestamp": "2025-11-20T00:00:00+00:00",
+  "message": "Unhandled exception",
+  "context": {}
+}
+```
+Gunakan format terstruktur ini untuk parsing atau agregasi log.
+
 Selamat berlatih!
