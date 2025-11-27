@@ -4,7 +4,7 @@ Slide 1 – Pengantar
 "Kita akan memaksimalkan Git di VS Code menggunakan contoh proyek PHP sederhana. Tujuan: menghasilkan commit yang bersih, terstruktur, mudah ditelusuri. UI VS Code membantu visualisasi staging yang sebelumnya Anda lakukan lewat CLI."  
 
 Slide 2 – Prasyarat  
-"Anda sudah paham git add, commit, diff. Pastikan PHP 8+, Composer, Git, VS Code, dan ekstensi GitLens/Git Graph terpasang. Repo latihan siap sehingga fokus kita pada praktik staging granular."  
+"Saya asumsi Anda sudah nyaman dengan perintah dasar seperti git add, git commit, git diff. Pastikan Git dan VS Code terpasang, serta kita punya repo contoh dengan beberapa branch agar bisa simulasi skenario nyata."  
 
 Slide 3 – Mapping Konsep  
 "Working directory = file PHP yang Anda edit. Saat di-stage, masuk ke area Staged Changes. HEAD merepresentasikan commit terakhir. Diff view menampilkan perubahan baris—memudahkan keputusan: mana masuk commit fitur, mana nanti untuk refactor."  

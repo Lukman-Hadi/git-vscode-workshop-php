@@ -1,0 +1,14 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "PHPUnit Debug",
+      "type": "php",
+      "request": "launch",
+      "program": "${workspaceFolder}/vendor/bin/phpunit",
+      "cwd": "${workspaceFolder}",
+      "runtimeExecutable": "php",
+      "env": { "XDEBUG_MODE": "debug,coverage" }
+    }
+  ]
+}
