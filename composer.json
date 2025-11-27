@@ -1,1 +1,24 @@
-{"name":"workshop/git-vscode-php","description":"Repo latihan workshop Git VS Code (PHP).","type":"project","license":"MIT","require":{},"autoload":{"psr-4":{"App\\":"src/"}}}
+{
+  "name": "workshop/git-vscode-php",
+  "description": "Repo latihan workshop Git VS Code (PHP).",
+  "type": "project",
+  "license": "MIT",
+  "require": {},
+  "require-dev": {
+    "phpunit/phpunit": "^10.5"
+  },
+  "autoload": {
+    "psr-4": {
+      "App\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "App\\Tests\\": "tests/"
+    }
+  },
+  "scripts": {
+    "test": "phpunit",
+    "phpunit": "vendor/bin/phpunit"
+  }
+}

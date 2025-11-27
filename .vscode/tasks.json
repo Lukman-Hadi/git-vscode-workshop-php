@@ -1,0 +1,7 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    { "label": "PHPUnit: Run All", "type": "shell", "command": "./vendor/bin/phpunit", "group": "test", "problemMatcher": [] },
+    { "label": "PHPUnit: Coverage HTML", "type": "shell", "command": "./vendor/bin/phpunit --coverage-html coverage", "group": "test", "problemMatcher": [] }
+  ]
+}
